@@ -1,14 +1,13 @@
 import { TodoForm, TodoItem } from "./components";
 import { TodoProvider } from "./contexts/TodoContext";
 import { useState, useEffect } from "react";
-import './App.css'
+import "./App.css";
 export default function App() {
   const [todos, setTodos] = useState([]);
 
   const addTodo = (todo) => {
     // setTodos((prev) => [{ id: Date.now(), ...todo }, ...prev]); // add todo before the existing todos
-    setTodos((prev) => [ ...prev,{ id: Date.now(), ...todo }]); // add todo after the existing todos
-
+    setTodos((prev) => [...prev, { id: Date.now(), ...todo }]); // add todo after the existing todos
   };
 
   const updateTodo = (id, todo) => {
