@@ -16,8 +16,8 @@
 |    Custom Hooks      |   [Docs](https://t.ly/lOAp5) & [Link](https://t.ly/NeMAB) |
 |    BG Changer      |     [Link](https://shorturl.at/eKRT7) |
 |    Password Generator      |     [Link](https://shorturl.at/dhjAM) |
-|    Context API           |    [Docs](https://rb.gy/tocrd1) & [Link](https://rb.gy/tocrd1) |
+|    Context API           |    [Docs](https://rb.gy/tocrd1) & [Link](https://react.dev/reference/react/useContext) |
 |    Theme Swicher          |    [Link](https://rb.gy/wpayrr) |
-
-
+|    LocalStorage ToDo         |    [Docs](https://shorturl.at/dwxCD) |
+| Redux Toolkit          |    [Docs](https://shorturl.at/dqFP3) & [Link](https://redux.js.org/) |
 
