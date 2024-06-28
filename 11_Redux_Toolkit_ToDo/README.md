@@ -25,9 +25,8 @@ export const store = configureStore({
 
   - Define `initialState`
   - Create a Slice using "createSlice"
-  - `createSlice` takes an object, abd there will be "name", "initialState", "reducers" inside the createSlice
   - Define `reducers`, which are functions that specify how the state should be updated in response to actions.
-  - `reducers` is an Object. In which we can add multiple `key, value` pairs. `value` will be the `"function"`.
+  - `reducers` is an Object. In which we can add multiple `key, value` pairs (They are called `actions`). `value` will be the `"function"`.
   - Inside the function of value in reducers, we get two things `state, action`.
   - `"state"` : Updated state value in the store
   - `"action"` : action.payload
