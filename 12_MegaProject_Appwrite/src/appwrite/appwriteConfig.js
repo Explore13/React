@@ -5,22 +5,23 @@ export class Service {
   client = new Client();
   databases;
   bucket;
+
   constructor() {
     this.client
-      .setEndpoint(config.appwriteProjectId)
+      .setEndpoint(config.appwriteUrl) // Corrected from config.appwriteProjectId to config.appwriteUrl
       .setProject(config.appwriteProjectId);
 
     this.databases = new Databases(this.client);
     this.bucket = new Storage(this.client);
   }
 
-  // createPost
-  async createPost({ title, content, featuredImage, status }) {
+  // Create a post
+  async createPost({ title, content, featuredImage, status, userId }) {
     try {
-      return await databases.createDocument(
+      return await this.databases.createDocument(
         config.appwriteDatabaseId, // databaseId
         config.appwriteCollectionId, // collectionId
-        slug, // documentId
+        ID.unique(), // documentId
         {
           title,
           content,
@@ -34,8 +35,8 @@ export class Service {
     }
   }
 
-  // updatePost
-  async updatePost(slug, { title, content, featuredImage, status, userId }) {
+  // Update a post
+  async updatePost(slug, { title, content, featuredImage, status }) {
     try {
       return await this.databases.updateDocument(
         config.appwriteDatabaseId, // databaseId
@@ -46,24 +47,24 @@ export class Service {
           content,
           featuredImage,
           status,
-        } // data (optional)
+        }
       );
     } catch (error) {
-      console.log(`Appwrite Service :: upfacePost :: error `);
+      console.log(`Appwrite Service :: updatePost :: error `, error);
     }
   }
 
-  // deletePost
-  async deletePost(slug) {
+  // Delete a post
+  async deletePost(postId) {
     try {
       await this.databases.deleteDocument(
         config.appwriteDatabaseId, // databaseId
         config.appwriteCollectionId, // collectionId
-        slug // documentId
+        postId // documentId
       );
       return true;
     } catch (error) {
-      console.log(`Appwrite Service :: deletePost :: error `);
+      console.log(`Appwrite Service :: deletePost :: error `, error);
       return false;
     }
   }
@@ -77,7 +78,7 @@ export class Service {
         slug // documentId
       );
     } catch (error) {
-      console.log(`Appwrite Service :: getPost :: error `);
+      console.log(`Appwrite Service :: getPost :: error `, error);
       return false;
     }
   }
@@ -91,27 +92,26 @@ export class Service {
         queries // queries
       );
     } catch (error) {
-      console.log(`Appwrite Service :: getPosts :: error `);
+      console.log(`Appwrite Service :: getPosts :: error `, error);
       return false;
     }
   }
 
-  // file upload service
+  // File upload service
   async uploadFile(file) {
     try {
       return await this.bucket.createFile(
-        config.appwriteBucketId,
-        ID.unique(),
-        file
-        // document.getElementById('uploader').files[0]
+        config.appwriteBucketId, // bucketId
+        ID.unique(), // fileId
+        file // file from input
       );
     } catch (error) {
-      console.log(`Appwrite Service :: uploadFile :: error `);
+      console.log(`Appwrite Service :: uploadFile :: error `, error);
       return false;
     }
   }
 
-  // delete file
+  // Delete a file
   async deleteFile(fileId) {
     try {
       await this.bucket.deleteFile(
@@ -120,33 +120,18 @@ export class Service {
       );
       return true;
     } catch (error) {
-      console.log(`Appwrite Service :: deleteFile :: error `);
+      console.log(`Appwrite Service :: deleteFile :: error `, error);
       return false;
     }
   }
 
-  // file preview
+  // File preview
   getFilePreview(fileId) {
     return this.bucket.getFilePreview(
       config.appwriteBucketId, // bucketId
       fileId // fileId
-      /*
-        0, // width (optional)
-        0, // height (optional)
-        ImageGravity.Center, // gravity (optional)
-        0, // quality (optional)
-        0, // borderWidth (optional)
-        '', // borderColor (optional)
-        0, // borderRadius (optional)
-        0, // opacity (optional)
-        -360, // rotation (optional)
-        '', // background (optional)
-        ImageFormat.Jpg // output (optional)
-        */
     );
   }
-
-  
 }
 
 const service = new Service();

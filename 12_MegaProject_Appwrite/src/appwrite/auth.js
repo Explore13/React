@@ -1,4 +1,4 @@
-import config from "../config/config.js";
+import config from "../config/config";
 import { Client, Account, ID } from "appwrite";
 
 export class AuthService { //Exporting the AuthService class allows other modules to create new instances of the AuthService class if they need to.
@@ -37,7 +37,7 @@ export class AuthService { //Exporting the AuthService class allows other module
   // Login
   async login({ email, password }) {
     try {
-      return await this.account.createEmailSession(email, password);
+      return await this.account.createEmailPasswordSession(email, password);
     } catch (error) {
       throw error;
     }
